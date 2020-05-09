@@ -14,11 +14,11 @@ from IPython import display
 from matplotlib.legend_handler import HandlerLine2D
 
 # === Variables ===
-is_training = True # Report scoring on training (True) or test (False) data
+is_training = False # Report scoring on training (True) or test (False) data
 create_tree_png = False # Create an image of a sample tree based on the data set (WINDOWS ONLY)
 print_importance_scores = False # Display a table of all importance scores (without feature names)
 print_importance_features = False # Display a table of all importance scores (with feature names)
-print_importance_top5 = True # Create a graph of the Top 5 importance features
+print_importance_top5 = False # Create a graph of the Top 5 importance features
 
 # === Load Source Data ===
 df = pd.read_csv("./data/prepped_data.csv")
@@ -44,7 +44,7 @@ regressor.fit(X_train, y_train)
 
 y_pred = regressor.predict(X_test)
 
-# Print classification report, confusion matrix, and 5fold accuracy
+# Print classification report, confusion matrix, and 5-fold cross-validation score (if training set)
 thesisLib.print_score(regressor, X_train, y_train, X_test, y_test, train=is_training)
 
 # Print a table over all feature importances in column order
