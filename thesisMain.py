@@ -26,20 +26,20 @@ df = pd.read_csv("./data/prepped_data.csv")
 # === Process the data before using ===
 # Use Pandas to create dummy variables for categorical data to prevent numerical hierarchy
 # issues which would occur with a nominal variation
-df = pd.get_dummies(df, columns = ["data_registry","publication_year","author_birth","gender","verb_conjugation","pre_particle","post_particle","genre"], prefix_sep="_", drop_first=True)
+df = pd.get_dummies(df, columns = ["dataRegistry","publicationYear","authorBirth","gender","verbConjugation","preParticle","postParticle","focusTarget","genre"], prefix_sep="_", drop_first=True)
 
 # LabelEncode the classes, turning them into nominal values
 le = LabelEncoder()
-df["entry_key"] = le.fit_transform(df["entry_key"])
+df["entryKey"] = le.fit_transform(df["entryKey"])
 
 # === Train & Test ===
 # Split data into train and test subsets 
-X = df.iloc[:,3:77] # Select the features
+X = df.iloc[:,3:79] # Select the features
 y = df.iloc[:,1] # Select the classes
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0) # Generate the sets by random selection
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=231) # Generate the sets by random selection
 
-regressor = RandomForestClassifier(n_estimators=100, max_depth=10, max_features=18, min_samples_split=0.2, random_state=0)
+regressor = RandomForestClassifier(n_estimators=100, max_depth=10, max_features=18, min_samples_split=0.2, random_state=231)
 regressor.fit(X_train, y_train)
 
 y_pred = regressor.predict(X_test)
